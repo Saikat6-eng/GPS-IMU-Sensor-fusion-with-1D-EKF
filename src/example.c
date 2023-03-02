@@ -22,6 +22,8 @@ int main()
 		
 		update_quat2_eul(euler_deg);
 		
+		euler_deg[0] *= RAD_2deg; euler_deg[1] *= RAD_2deg; euler_deg[2] *= RAD_2deg;
+		
 		if(gps_flag==true)
 		{
 			gps_flag = false;
