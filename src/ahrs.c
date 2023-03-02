@@ -439,7 +439,7 @@ void get_accl_ned(struct data *data_abs, float *accl)
 
 	Acc_abs[0] -= 0.0f;
 	Acc_abs[1] -= 0.0f;
-	Acc_abs[2] -= Actual_gravity;
+	Acc_abs[2] -= 1.0f;
 	
 	accelerationEast  = Acc_abs[1];
 	accelerationNorth = Acc_abs[0];
