@@ -1,4 +1,5 @@
 #include "math.h"
+#include "nav.h"
 
 double latlon_toDistance(double lat_to, double lon_to, double lat_from, double lon_from)
 {

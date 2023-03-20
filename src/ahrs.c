@@ -4,9 +4,6 @@
 #include <string.h>
 #include <math.h>
 
-extern unsigned char ARM_MODE;
-extern uint8_t b_int[20];
-extern char quat_updated;
 static float q[4] = {1.0f,0.0f,0.0f,0.0f};
 static float integralFBx = 0.0f;
 static float integralFBy = 0.0f;
@@ -17,7 +14,7 @@ static struct kelman struct_north,struct_east,struct_alt;
 static hpf lpf_n,lpf_e,lpf_d;
 struct data estimated_data;
 struct cfg ekf_cfg;
-
+char quat_updated;
 float dt_ahrs;
 float freq_ahrs;
 
@@ -110,7 +107,6 @@ void ahrs_update(struct kelman *updateThis,double pos_This,double vel_This)
 	updateThis->z[0][0] = pos_This;
 	updateThis->z[1][0] = vel_This;
 	
-//	if(ekf_cfg.pos_error!=0.0)
 	updateThis->R[0][0] = ekf_cfg.pos_error * ekf_cfg.pos_error;	
 	updateThis->R[1][1] = ekf_cfg.vel_error * ekf_cfg.vel_error;
 	
@@ -427,31 +423,33 @@ void acc_relative(struct data *data_rel,float *accl)
 }
 void get_accl_ned(struct data *data_abs, float *accl)
 {
-	double Acc_abs[3]={0.0f,0.0f,0.0f};
+	float norm_accl[3];
 	static float accelerationEast ;
- 	static float accelerationNorth;
+	static float accelerationNorth;
     static float accelerationUp   ;
 	
-// tilt-compensated 
-	Acc_abs[0] = R_mat[0]*accl[0]+R_mat[1]*accl[1]+R_mat[2]*accl[2];
-    Acc_abs[1] = R_mat[3]*accl[0]+R_mat[4]*accl[1]+R_mat[5]*accl[2];
-	Acc_abs[2] = R_mat[6]*accl[0]+R_mat[7]*accl[1]+R_mat[8]*accl[2];
-
-	Acc_abs[0] -= 0.0f;
-	Acc_abs[1] -= 0.0f;
-	Acc_abs[2] -= 1.0f;
+	float Norm = invSqrt(accl[0]*accl[0]+accl[1]*accl[1]+accl[2]*accl[2]);
 	
-	accelerationEast  = Acc_abs[1];
-	accelerationNorth = Acc_abs[0];
-	accelerationUp    = Acc_abs[2];
-
+	norm_accl[0] = Norm*accl[0];
+	norm_accl[1] = Norm*accl[1];
+	norm_accl[2] = Norm*accl[2];
+	
+// tilt-compensated 
+	accelerationNorth = R_mat[0]*norm_accl[0]+R_mat[1]*norm_accl[1]+R_mat[2]*norm_accl[2];
+    accelerationEast = R_mat[3]*norm_accl[0]+R_mat[4]*norm_accl[1]+R_mat[5]*norm_accl[2];
+	accelerationUp = R_mat[6]*norm_accl[0]+R_mat[7]*norm_accl[1]+R_mat[8]*norm_accl[2];
+//remove gravity
+	accelerationNorth -= 0.0f;
+	accelerationEast -= 0.0f;
+	accelerationUp -= 1.0f;
+	
     float sinMagneticDeclination = sin(Declination);
 	float easternNorthComponent = sinMagneticDeclination * accelerationEast;
 	float northernEasternComponent = -sinMagneticDeclination * accelerationNorth;
 
 	accelerationNorth += northernEasternComponent;
 	accelerationEast += easternNorthComponent;
-	
+//linear acceleration	
 	data_abs->E_AccNED[0] = Actual_gravity * accelerationNorth;
 	data_abs->E_AccNED[1] = Actual_gravity * accelerationEast;
 	data_abs->E_AccNED[2] = Actual_gravity * accelerationUp;	
