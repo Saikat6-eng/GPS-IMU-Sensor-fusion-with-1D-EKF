@@ -29,7 +29,7 @@ void getPointAhead(double lat_from,double lon_from,double distMtrs,double azimut
     double lon2_part2 = cos(radiusFraction) - (sin(lat1) * sin(lat2));
 		
     double lon2 = lon1 + atan2(lon2_part1, lon2_part2);
-          lon2 = mod_f((lon2 + 3.0 * Pi), (2.0 * Pi)) - Pi;
+          lon2 = fmod((lon2 + 3.0 * Pi), (2.0 * Pi)) - Pi;
 
     coord_deg[0] = lat2*RAD_2deg;
 	  coord_deg[1] = lon2*RAD_2deg;
