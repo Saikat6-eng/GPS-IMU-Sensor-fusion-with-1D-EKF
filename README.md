@@ -13,8 +13,8 @@ Acceleration - mss
 Gyro - radian
 Mag - uT
  
+https://youtu.be/GMFnxAAVidk
 
-
-Reference -
+References -
 # https://youtu.be/6M6wSLD-8M8
 # https://github.com/slobdell/kalman-filter-example
