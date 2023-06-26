@@ -9,9 +9,9 @@ Input data to be needed -
 Gps latitude, longitude - degrees (ned)
 Gps velocity - meters(ned)
 
-Acceleration - mss
-Gyro - radian
-Mag - uT
+Acceleration - mss,
+Gyro - radian,
+Mag - uT,
  
 https://youtu.be/GMFnxAAVidk
 
