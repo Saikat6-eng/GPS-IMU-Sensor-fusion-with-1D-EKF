@@ -9,7 +9,8 @@ Input data to be needed -
 Gps latitude, longitude - degrees(ned), alt - meter
 Gps velocity - meters/s(ned)
 
-#IMU Sensor frame
+#IMU Sensor frame :- 
+
 Acceleration_xyz - mss,
 Gyro_xyz - radians,
 Mag_xyz - uT,
