@@ -6,12 +6,13 @@ Simple ekf based on it's equation and optimized for embedded systems.
 
 Input data to be needed -
 
-Gps latitude, longitude - degrees (ned)
-Gps velocity - meters(ned)
+Gps latitude, longitude - degrees(ned), alt - meter
+Gps velocity - meters/s(ned)
 
-Acceleration - mss,
-Gyro - radian,
-Mag - uT,
+#IMU Sensor frame
+Acceleration_xyz - mss,
+Gyro_xyz - radians,
+Mag_xyz - uT,
  
 https://youtu.be/GMFnxAAVidk
 
