@@ -6,7 +6,8 @@ Simple ekf based on it's equation and optimized for embedded systems.
 
 Input data to be needed -
 
-Gps latitude, longitude - degrees(ned), alt - meter
+Gps latitude, longitude - degrees(ned), 
+alt - meter,
 Gps velocity - meters/s(ned)
 
 #IMU Sensor frame :- 
@@ -18,6 +19,5 @@ Mag_xyz - uT,
 https://youtu.be/GMFnxAAVidk
 
 References -
-https://youtu.be/6M6wSLD-8M8
-
+https://youtu.be/6M6wSLD-8M8,
 https://github.com/slobdell/kalman-filter-example
